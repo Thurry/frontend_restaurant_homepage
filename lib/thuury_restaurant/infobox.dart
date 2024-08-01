@@ -29,15 +29,15 @@ class RestaurantInfoBox extends StatelessWidget {
           Text(
             '박근원의 심야식당',
             style: TextStyle(
-              fontSize: 30,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
           ),
           SizedBox(height: 10),
           Text(
-            'Best food in town!',
+            'ESC 오늘의 메뉴는?',
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 16,
             ),
           ),
           SizedBox(height: 20),
@@ -50,12 +50,12 @@ class RestaurantInfoBox extends StatelessWidget {
               ),
               InfoItem(
                 icon: null,
-                review: 4.856,
+                hour: 8,
+                minute: 00,
               ),
               InfoItem(
                 icon: null,
-                hour: 8,
-                minute: 00,
+                review: 4.856,
               ),
             ],
           ),

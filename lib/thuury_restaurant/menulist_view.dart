@@ -78,34 +78,6 @@ class MenuListState extends State<MenuList> {
     }
   }
 
-  void scrollToCategory(int categoryId) async {
-    final key = categoryKeys[categoryId];
-    if (key?.currentContext != null) {
-      await Future.delayed(Duration.zero); // 현재 스크롤이 완료될 때까지 대기
-
-      final box = key!.currentContext!.findRenderObject() as RenderBox;
-      double yPosition = box.localToGlobal(Offset.zero).dy;
-
-      if (categoryId == categories.first.id) {
-        // 첫 번째 카테고리는 상단에 고정
-        yPosition = 0;
-      } else if (categoryId == categories.last.id) {
-        // 마지막 카테고리는 뷰포트에 따라 조정
-        yPosition -= (MediaQuery.of(context).size.height - box.size.height);
-      } else {
-        // 중간 카테고리들은 중앙에 위치
-        yPosition -=
-            (MediaQuery.of(context).size.height / 2 - box.size.height / 2);
-      }
-
-      _scrollController.animateTo(
-        yPosition,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     List<Widget> itemList = [];

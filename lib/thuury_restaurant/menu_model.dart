@@ -23,148 +23,214 @@ class MenuItem extends StatefulWidget {
 }
 
 class _MenuItemState extends State<MenuItem> {
-  int quantity = 0; // Default quantity
+  int quantity = 0; // 초기 수량
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 520.0,
-            height: 180, // 컨테이너 높이 조절
-            decoration: ShapeDecoration(
-              color: const Color(0xFFEFF2F5),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              child: Column(
-                mainAxisAlignment:
-                    MainAxisAlignment.start, // 컨테이너의 내부 요소를 상단 정렬
+      child: Container(
+        width: 520.0,
+        decoration: ShapeDecoration(
+          color: const Color(0xFFEFF2F5),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(top: 2), // 상단 여백 추가
-                        child: Image.network(widget.imageUrl,
-                            width: 100, height: 100), // 이미지
-                      ),
-                      const SizedBox(width: 33), // 이미지
-                      // 이미지와 텍스트 사이 간격
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.name,
-                              style: const TextStyle(
-                                color: Color(0xFF302F3C),
-                                fontSize: 25,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w800,
-                              ),
-                            ),
-                            const SizedBox(height: 15), // 이름과 설명 사이 간격 증가
-                            Text(
-                              widget.description,
-                              style: const TextStyle(
-                                color: Color(0xFF302F3C),
-                                fontSize: 14, // 폰트 크기 조정
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                  Container(
+                    padding: const EdgeInsets.only(top: 2),
+                    child: Image.network(
+                      widget.imageUrl,
+                      width: 100,
+                      height: 100,
+                      fit: BoxFit.cover, // 이미지 비율 유지
+                    ),
                   ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon:
-                            const Icon(Icons.remove, color: Color(0xFFFF6838)),
-                        onPressed: () {
-                          if (quantity > 0 && quantity <= widget.maxQuantity) {
-                            setState(() {
-                              quantity--;
-                            });
-                          }
-                        },
-                      ),
-                      Text(
-                        '$quantity',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.name,
+                          style: const TextStyle(
+                            color: Color(0xFF302F3C),
+                            fontSize: 25,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
+                        const SizedBox(height: 8), // 이름과 설명 사이 간격 줄임
+                        Text(
+                          widget.description,
+                          style: const TextStyle(
+                            color: Color(0xFF302F3C),
+                            fontSize: 14,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12), // 텍스트와 버튼 사이의 여백 줄임
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.remove,
+                                color: Color(0xFFFF6838)),
+                            onPressed: () {
+                              if (quantity > 0) {
+                                setState(() {
+                                  quantity--;
+                                });
+                              }
+                            },
+                          ),
+                          Text(
+                            '$quantity',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          IconButton(
+                            icon:
+                                const Icon(Icons.add, color: Color(0xFFFF6838)),
+                            onPressed: () {
+                              if (quantity < widget.maxQuantity) {
+                                setState(() {
+                                  quantity++;
+                                });
+                              }
+                            },
+                          ),
+                        ],
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.add, color: Color(0xFFFF6838)),
+                      const SizedBox(height: 10), // 수량 버튼과 장바구니 버튼 사이의 여백
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: const Color(0xFFFF6838),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                         onPressed: () {
-                          if (quantity >= 0 && quantity < widget.maxQuantity) {
+                          if (quantity > 0) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '${widget.name} ($quantity 개)가 장바구니에 추가되었습니다!',
+                                  style: const TextStyle(
+                                    color: Colors.black, // 텍스트 색상 변경
+                                  ),
+                                ),
+                                backgroundColor:
+                                    const Color(0xFFFFE4C4), // 연한 주황색 배경
+                                duration: const Duration(seconds: 2),
+                              ),
+                            );
+                            // 수량 초기화
                             setState(() {
-                              quantity++;
+                              quantity = 0;
                             });
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  '미쓰떠리하게도 아무것도 담지 않으셨어요',
+                                  style: TextStyle(
+                                    color: Colors.black, // 텍스트 색상 변경
+                                  ),
+                                ),
+                                backgroundColor: Color(0xFFFFE4C4), // 연한 주황색 배경
+                                duration: Duration(seconds: 2),
+                              ),
+                            );
                           }
                         },
+                        child: const Text(
+                          '장바구니 담기',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
-            ),
+            ],
           ),
-          const SizedBox(height: 10), // 하단 여백
-        ],
+        ),
       ),
     );
   }
 }
-// 하단 여백
 
+// 메뉴 아이템 목록
 List<MenuItem> menuItems = [
   const MenuItem(
     imageUrl: 'https://via.placeholder.com/150',
-    name: 'Item 1',
-    description: 'Description 1',
+    name: '아이템 1',
+    description: '설명 1',
     price: '\$10',
     categoryId: 1,
   ),
   const MenuItem(
     imageUrl: 'https://via.placeholder.com/150',
-    name: 'Item 2',
-    description: 'Description 2',
+    name: '아이템 2',
+    description: '설명 2',
     price: '\$20',
     categoryId: 2,
   ),
   const MenuItem(
     imageUrl: 'https://via.placeholder.com/150',
-    name: 'Item 3',
-    description: 'Description 2',
+    name: '아이템 3',
+    description: '설명 3',
     price: '\$20',
     categoryId: 3,
   ),
   const MenuItem(
     imageUrl: 'https://via.placeholder.com/150',
-    name: 'Item 4',
-    description: 'Description 2',
+    name: '아이템 4',
+    description: '설명 4',
     price: '\$20',
     categoryId: 1,
   ),
   const MenuItem(
     imageUrl: 'https://via.placeholder.com/150',
-    name: 'Item 4',
-    description: 'Description 2',
+    name: '아이템 5',
+    description: '설명 5',
     price: '\$20',
+    categoryId: 4,
+  ),
+  const MenuItem(
+    imageUrl: 'https://via.placeholder.com/150',
+    name: '아이템 6',
+    description: '설명 6',
+    price: '\$30',
     categoryId: 4,
   ),
 ];

@@ -39,7 +39,6 @@ class _RestaurantHomePageState extends State<RestaurantHomePage> {
     setState(() {
       selectedCategoryId = categoryId;
     });
-    _menuListKey.currentState?.scrollToCategory(categoryId);
   }
 
   // Callback for when the category changes due to scrolling

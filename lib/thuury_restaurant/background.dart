@@ -7,13 +7,13 @@ class BackgroundImage extends StatelessWidget {
 
   Future<String> fetchImageUrl() async {
     final response = await http.get(Uri.parse(
-        'https://cdn.pixabay.com/photo/2017/12/10/13/37/christmas-3009949_1280.jpg'));
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR83p7OhsY9UCzjGt6l0zkc8p_idlcosgHjgg&s'));
 
     if (response.statusCode == 200) {
       // 여기에서는 이미지를 포함하는 URL을 직접 반환합니다.
       // final data = json.decode(response.body);
       // return data['imageUrl'];
-      return 'https://cdn.pixabay.com/photo/2017/12/10/13/37/christmas-3009949_1280.jpg';
+      return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR83p7OhsY9UCzjGt6l0zkc8p_idlcosgHjgg&s';
     } else {
       throw Exception('Failed to load image URL');
     }
@@ -27,7 +27,7 @@ class BackgroundImage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError || !snapshot.hasData) {
-          return const Center(child: Text('이미지 로딩 오류'));
+          return const Center(child: Text('이미지 로딩 오류')); //Thurry귀여운걸로 해야함
         } else {
           return Stack(
             children: [
