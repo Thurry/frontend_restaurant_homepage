@@ -6,7 +6,7 @@ class CategoryModel {
   CategoryModel({required this.name, required this.active, required this.id});
 }
 
-List categoryData = [
+List<CategoryModel> categories = [
   CategoryModel(name: '인기', active: true, id: 1),
   CategoryModel(name: '신영빈', active: false, id: 2),
   CategoryModel(name: '강민규', active: false, id: 3),

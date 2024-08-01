@@ -1,75 +1,61 @@
 import 'package:flutter/material.dart';
 import 'category_model.dart';
 
-class CategoryView extends StatefulWidget {
+class CategoryView extends StatelessWidget {
   final Function(int) onCategorySelected;
+  final int selectedCategoryId;
 
-  const CategoryView({required this.onCategorySelected, super.key});
-
-  @override
-  State<CategoryView> createState() => _CategoryViewState();
-}
-
-class _CategoryViewState extends State<CategoryView> {
-  int? selectedIndex;
+  const CategoryView({
+    required this.onCategorySelected,
+    required this.selectedCategoryId,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 390),
-      child: SizedBox(
-        height: 35,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: categoryData.length,
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  selectedIndex = index;
-                  widget.onCategorySelected(categoryData[index].id);
-                  for (int i = 0; i < categoryData.length; i++) {
-                    categoryData[i].active = (i == selectedIndex);
-                  }
-                });
-              },
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 5),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                decoration: BoxDecoration(
-                  color: categoryData[index].active
-                      ? const Color(0xFFFF6838)
-                      : const Color(0xFFFAFAFA),
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: categoryData[index].active
-                      ? [
-                          const BoxShadow(
-                            color: Color(0x30FF6838),
-                            blurRadius: 15,
-                            offset: Offset(0, 3),
-                            spreadRadius: 0,
-                          )
-                        ]
-                      : [],
-                ),
+      height: 60,
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: categories.length,
+        itemBuilder: (context, index) {
+          final category = categories[index];
+          final isSelected = category.id == selectedCategoryId;
+
+          // Define different colors for selected and non-selected states
+          final backgroundColor = isSelected ? Colors.orange : Colors.white;
+          final textColor = isSelected ? Colors.white : Colors.black;
+
+          return GestureDetector(
+            onTap: () {
+              onCategorySelected(category.id);
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              decoration: BoxDecoration(
+                color: backgroundColor, // Use the color based on selection
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 5.0,
+                    spreadRadius: 2.0,
+                  ),
+                ],
+              ),
+              child: Center(
                 child: Text(
-                  categoryData[index].name,
-                  textAlign: TextAlign.center,
+                  category.name,
                   style: TextStyle(
-                    color: categoryData[index].active
-                        ? Colors.white
-                        : const Color(0xFF302F3C),
-                    fontSize: 13.50,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w800,
-                    height: 0,
+                    color: textColor, // Use the text color based on selection
                   ),
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

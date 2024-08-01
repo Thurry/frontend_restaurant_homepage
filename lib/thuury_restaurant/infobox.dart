@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thurry/thuury_restaurant/info_widget.dart';
 
 class RestaurantInfoBox extends StatelessWidget {
   const RestaurantInfoBox({super.key});
@@ -9,102 +10,57 @@ class RestaurantInfoBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          // 정보 박스
-          Positioned(
-            top: 170, // 배경 이미지와 겹치게 위치 조정
-            child: Container(
-              width: 354,
-              height: 200,
-              decoration: ShapeDecoration(
-                color: const Color(0xFFFAFAFA),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
-                ),
-              ),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 20), // 원형 이미지와 텍스트 간격 조정
-                  Text(
-                    'Restaurant Name',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xFF302F3C),
-                      fontSize: 28,
-                      fontFamily: 'Playfair Display',
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  SizedBox(height: 20), // 텍스트와 아이템 간격 조정
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      InfoItem(
-                        icon: null,
-                        text: "🎁 8 Box",
-                      ),
-                      InfoItem(
-                        icon: null,
-                        text: "⏰ 8:00 PM",
-                      ),
-                      InfoItem(
-                        icon: null,
-                        text: "⭐️   4.8",
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          // 원형 이미지
-          Positioned(
-            top: 120, // 정보 박스와 겹치게 위치 조정
-            child: Container(
-              width: 100,
-              height: 100,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: NetworkImage(logoUrl), // 원형으로 표시할 이미지 URL
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 5.0,
+            spreadRadius: 2.0,
           ),
         ],
       ),
-    );
-  }
-}
-
-class InfoItem extends StatelessWidget {
-  final String? icon;
-  final String text;
-
-  const InfoItem({this.icon, required this.text, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (icon != null) Image.network(icon!, width: 27, height: 26),
-        const SizedBox(width: 5),
-        Text(
-          text,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Color(0xFF302F3C),
-            fontSize: 13.50,
-            fontFamily: 'Pretendard',
-            fontWeight: FontWeight.w800,
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '박근원의 심야식당',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-      ],
+          SizedBox(height: 10),
+          Text(
+            'Best food in town!',
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              InfoItem(
+                icon: null,
+                box: 8,
+              ),
+              InfoItem(
+                icon: null,
+                review: 4.856,
+              ),
+              InfoItem(
+                icon: null,
+                hour: 8,
+                minute: 00,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
