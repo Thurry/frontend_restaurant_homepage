@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'thuury_restaurant/restaurant_background.dart';
-import 'thuury_restaurant/restaurant_category.dart';
-import 'thuury_restaurant/restaurant_infoBox.dart';
-import 'thuury_restaurant/restaurant_menu.dart';
+import 'package:thurry/thuury_restaurant/menulist_view.dart';
+import 'thuury_restaurant/background.dart';
+import 'thuury_restaurant/category_view.dart';
+import 'thuury_restaurant/infobox.dart';
+import 'thuury_restaurant/shoppingcart_widget.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Restaurant App',
+      title: 'Thurry_RestaurantPage',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -23,47 +24,36 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class RestaurantHomePage extends StatelessWidget {
+class RestaurantHomePage extends StatefulWidget {
   const RestaurantHomePage({super.key});
+
+  @override
+  _RestaurantHomePageState createState() => _RestaurantHomePageState();
+}
+
+class _RestaurantHomePageState extends State<RestaurantHomePage> {
+  int selectedCategoryId = 1;
+
+  void onCategorySelected(int categoryId) {
+    setState(() {
+      selectedCategoryId = categoryId;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Restaurant App'),
-      ),
-      body: const Stack(
+      body: Stack(
         children: [
+          const Shoppingcart(),
           // Background Image
-          BackgroundImage(),
+          const BackgroundImage(),
           // Category Selection
-          CategorySelection(),
+          CategoryView(onCategorySelected: onCategorySelected),
           // Restaurant Info Box
-          RestaurantInfoBox(),
+          const RestaurantInfoBox(),
           // Menu Items
-          Positioned(
-            left: 30,
-            top: 600,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  MenuItem(
-                    imageUrl: 'https://via.placeholder.com/150',
-                    name: 'Item 1',
-                    description: 'Delicious food item 1',
-                    price: '\$10',
-                  ),
-                  MenuItem(
-                    imageUrl: 'https://via.placeholder.com/150',
-                    name: 'Item 2',
-                    description: 'Delicious food item 2',
-                    price: '\$20',
-                  ),
-                ],
-              ),
-            ),
-          ),
+          MenuList(selectedCategoryId: selectedCategoryId),
         ],
       ),
     );

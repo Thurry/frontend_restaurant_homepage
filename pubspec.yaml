@@ -58,6 +58,8 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -75,6 +77,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: CustomIcons
+      fonts:
+        - asset: assets/fonts/MyFlutterApp.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

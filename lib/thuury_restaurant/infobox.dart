@@ -1,97 +1,84 @@
 import 'package:flutter/material.dart';
-import 'dart:convert'; // For JSON decoding
-import 'package:http/http.dart' as http; // For HTTP requests
 
-class RestaurantInfoBox extends StatefulWidget {
+class RestaurantInfoBox extends StatelessWidget {
   const RestaurantInfoBox({super.key});
 
-  @override
-  _RestaurantInfoBoxState createState() => _RestaurantInfoBoxState();
-}
-
-class _RestaurantInfoBoxState extends State<RestaurantInfoBox> {
-  late String name;
-  late String openTime;
-  late String rating;
-  late String boxCount;
-  static const String boxIconUrl = "https://via.placeholder.com/27x26";
-  bool isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchRestaurantInfo();
-  }
-
-  Future<void> fetchRestaurantInfo() async {
-    final response =
-        await http.get(Uri.parse('https://yourapi.com/restaurant/1'));
-
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      setState(() {
-        name = data['name'];
-        openTime = data['openTime'];
-        rating = data['rating'];
-        boxCount = data['boxCount'];
-        isLoading = false;
-      });
-    } else {
-      throw Exception('Failed to load restaurant info');
-    }
-  }
+  //static const String boxIconUrl = "https://via.placeholder.com/27x26";
+  static const String logoUrl =
+      "https://via.placeholder.com/100"; // 원 안에 들어갈 로고 이미지 URL
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const Center(child: CircularProgressIndicator())
-        : Positioned(
-            left: 30,
-            top: 166,
+    return Center(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          // 정보 박스
+          Positioned(
+            top: 170, // 배경 이미지와 겹치게 위치 조정
             child: Container(
               width: 354,
-              height: 181,
+              height: 200,
               decoration: ShapeDecoration(
                 color: const Color(0xFFFAFAFA),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  SizedBox(height: 20), // 원형 이미지와 텍스트 간격 조정
                   Text(
-                    name,
+                    'Restaurant Name',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Color(0xFF302F3C),
                       fontSize: 28,
                       fontFamily: 'Playfair Display',
                       fontWeight: FontWeight.w900,
-                      height: 0,
                     ),
                   ),
+                  SizedBox(height: 20), // 텍스트와 아이템 간격 조정
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       InfoItem(
-                        icon: boxIconUrl,
-                        text: "$boxCount Box",
+                        icon: null,
+                        text: "🎁 8 Box",
                       ),
                       InfoItem(
                         icon: null,
-                        text: "⏰ $openTime",
+                        text: "⏰ 8:00 PM",
                       ),
                       InfoItem(
                         icon: null,
-                        text: rating,
+                        text: "⭐️   4.8",
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-          );
+          ),
+          // 원형 이미지
+          Positioned(
+            top: 120, // 정보 박스와 겹치게 위치 조정
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: NetworkImage(logoUrl), // 원형으로 표시할 이미지 URL
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -115,7 +102,6 @@ class InfoItem extends StatelessWidget {
             fontSize: 13.50,
             fontFamily: 'Pretendard',
             fontWeight: FontWeight.w800,
-            height: 0,
           ),
         ),
       ],
