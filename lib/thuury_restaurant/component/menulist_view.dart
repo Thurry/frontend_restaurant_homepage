@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'menu_model.dart';
-import 'category_model.dart';
+import '../model/menu_model.dart';
+import '../model/category_model.dart';
 
 class MenuList extends StatefulWidget {
   final Function(int) onCategoryChanged;
@@ -109,10 +109,13 @@ class MenuListState extends State<MenuList> {
       }
     }
 
-    return ListView(
-      controller: _scrollController,
-      padding: const EdgeInsets.all(8.0),
-      children: itemList,
+    // Expanded를 사용하여 ListView에 고정된 높이를 제공합니다.
+    return Expanded(
+      child: ListView(
+        controller: _scrollController,
+        padding: const EdgeInsets.all(8.0),
+        children: itemList,
+      ),
     );
   }
 }

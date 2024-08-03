@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'category_model.dart';
+import '../model/category_model.dart';
 
 class CategoryView extends StatelessWidget {
   final Function(int) onCategorySelected;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thurry/thuury_restaurant/info_widget.dart';
+import 'package:thurry/thuury_restaurant/widget/info_widget.dart';
 
 class RestaurantInfoBox extends StatelessWidget {
   const RestaurantInfoBox({super.key});
@@ -27,7 +27,7 @@ class RestaurantInfoBox extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '박근원의 심야식당',
+            '성심당의 아들 고태우',
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
@@ -35,7 +35,7 @@ class RestaurantInfoBox extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Text(
-            'ESC 오늘의 메뉴는?',
+            '고태우는 내년 휴가를 나와 ESC 셰프를 하겠다고 함 그는 내년에 빵을 선보일 예정',
             style: TextStyle(
               fontSize: 16,
             ),

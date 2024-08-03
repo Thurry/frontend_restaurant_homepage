@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:thurry/thuury_restaurant/menulist_view.dart';
-import 'thuury_restaurant/background.dart';
-import 'thuury_restaurant/category_view.dart';
-import 'thuury_restaurant/infobox.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:thurry/StoreRegistration_screen.dart';
+import 'package:thurry/menuRegistration.dart';
+import 'screens/cart_screen.dart';
+import 'screens/intro_screen.dart';
+import 'screens/map_screen.dart';
+import 'screens/reservation_screen.dart';
+import 'restauranthome_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:thurry/thuury_restaurant/model/cart_model.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => CartModel(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -14,68 +25,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Thurry Restaurant',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        fontFamily: 'Pretendard',
       ),
-      home: const RestaurantHomePage(),
-    );
-  }
-}
-
-class RestaurantHomePage extends StatefulWidget {
-  const RestaurantHomePage({super.key});
-
-  @override
-  _RestaurantHomePageState createState() => _RestaurantHomePageState();
-}
-
-class _RestaurantHomePageState extends State<RestaurantHomePage> {
-  int selectedCategoryId = 1; // Default selected category
-  final GlobalKey<MenuListState> _menuListKey = GlobalKey<MenuListState>();
-
-  // Callback for when a category is selected
-  void onCategorySelected(int categoryId) {
-    setState(() {
-      selectedCategoryId = categoryId;
-    });
-  }
-
-  // Callback for when the category changes due to scrolling
-  void onCategoryChanged(int categoryId) {
-    if (selectedCategoryId != categoryId) {
-      setState(() {
-        selectedCategoryId = categoryId;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: Stack(
-        children: [
-          const BackgroundImage(),
-          Column(
-            children: [
-              const SizedBox(height: 200),
-              const RestaurantInfoBox(),
-              CategoryView(
-                onCategorySelected: onCategorySelected,
-                selectedCategoryId: selectedCategoryId,
-              ),
-              Expanded(
-                child: MenuList(
-                  key: _menuListKey,
-                  onCategoryChanged: onCategoryChanged,
-                  selectedCategoryId: selectedCategoryId,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
+      initialRoute: '/',
+      routes: {
+        '/cart': (context) => const CartScreen(),
+        '/register': (context) => const StoreRegistrationScreen(),
+        '/': (context) => const IntroScreen(),
+        '/map': (context) => const MapScreen(),
+        '/restauranthome': (context) => const RestaurantHome(),
+        '/menuregister': (context) => const MenuRegistration(),
+        '/storeregister': (context) => const StoreRegistrationScreen(),
+      },
     );
   }
 }

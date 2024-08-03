@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:thurry/thuury_restaurant/shoppingcart_widget.dart';
 
 class BackgroundImage extends StatelessWidget {
   const BackgroundImage({super.key});
@@ -45,7 +44,6 @@ class BackgroundImage extends StatelessWidget {
                   ),
                 ),
               ),
-              const Positioned(right: 20, top: 50, child: Shoppingcart()),
             ],
           );
         }
